@@ -303,7 +303,7 @@
         <div class="hero-content">
             <h1>Innovative Technology Solutions</h1>
             <p>Transforming businesses through cutting-edge software development</p>
-            <button class="cta-button">Get Started</button>
+            <button onclick="redirectToWhatsApp()" class="cta-button">Get Started</button>
         </div>
     </section>
 
@@ -408,6 +408,23 @@
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active');
+        }
+    </script>
+    <script>
+        function redirectToWhatsApp() {
+            // Custom pre-filled message for innovators and partners
+            const message = encodeURIComponent(
+                "Hi Emerald Codelines, I have an innovative idea and would like to partner with you. Can we discuss how we can collaborate?"
+            );
+            
+            // Your WhatsApp number
+            const phoneNumber = '+2348085040146';
+            
+            // Create the WhatsApp URL
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+            
+            // Redirect to the WhatsApp URL
+            window.location.href = whatsappUrl;
         }
     </script>
 </body>
