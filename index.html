@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emerald Codelines | Innovative Technology Solutions</title>
+    <meta name="description" content="Emerald Codelines provides cutting-edge software development, AI solutions, and real estate technology. Explore our services and products like EC VistaCore and EC Urban Lens.">
+    <meta name="keywords" content="software development, AI solutions, real estate technology, EC VistaCore, EC Urban Lens, Emerald Codelines">
+    <meta name="author" content="Emerald Codelines">
+    <meta property="og:title" content="Emerald Codelines | Innovative Technology Solutions">
+    <meta property="og:description" content="Emerald Codelines offers custom software development, AI solutions, and real estate technology. Discover our services and products like EC VistaCore and EC Urban Lens.">
+    <meta property="og:image" content="https://example.com/emerald-codelines-og-image.jpg">
+    <meta property="og:url" content="https://www.emeraldcodelines.org">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --emerald-green: #2ecc71;
+            --deep-blue: #2c3e50;
+            --text-dark: #333;
+            --text-light: #ecf0f1;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Header and Hamburger Menu */
+        header {
+            background: var(--deep-blue);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--emerald-green);
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            border-radius: 50px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--emerald-green);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile Navigation */
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--deep-blue);
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44,62,80,0.9), rgba(44,62,80,0.9)),
+                        url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6');
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 1rem;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: var(--emerald-green);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #27ae60;
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--deep-blue);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            color: var(--emerald-green);
+            margin-bottom: 1rem;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background: var(--emerald-green);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deep-blue);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer a {
+            color: var(--emerald-green);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .services-grid, .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="./images/logo.png" alt="Emerald Codelines Logo">
+                Emerald Codelines
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">Home</a>
+                <a href="#services">Services</a>
+                <a href="#products">Products</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Innovative Technology Solutions</h1>
+            <p>Transforming businesses through cutting-edge software development</p>
+            <button class="cta-button">Get Started</button>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <h2>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-code"></i>
+                <h3>Custom Software Development</h3>
+                <p>Tailored solutions for your business needs</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile App Development</h3>
+                <p>iOS & Android applications development</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-robot"></i>
+                <h3>AI Solutions</h3>
+                <p>Smart solutions powered by artificial intelligence</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="products">
+        <h2>Our Products</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-building"></i>
+                <h3>EC VistaCore</h3>
+                <p>Comprehensive real estate management solution</p>
+                <a href="pages/ecurbanlense.html">Learn More</a>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-home"></i>
+                <h3>EC Urban Lens</h3>
+                <p>AI-powered property finding platform</p>
+                <a href="./pages/scvistacore.html">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="portfolio">
+        <h2>Our Portfolio</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="images/dekolhomes.png" alt="Dekol Homes Platform">
+                <div class="portfolio-overlay">
+                    <h3>Dekol Homes Platform</h3>
+                    <p>Real estate management system</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/fundezer.jpg" alt="FUNDEZER Healthcare Funding Platform">
+                <div class="portfolio-overlay">
+                    <h3>FUNDEZER</h3>
+                    <p>Healthcare funding platform</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/ilimi.png" alt="Ilimi TVET E-Learning Platform">
+                <div class="portfolio-overlay">
+                    <h3>Ilimi</h3>
+                    <p>TVET e-learning platform</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-form">
+            <form>
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>Back of Hakimi Palace, Kagini-Kubwa, Abuja FCT</p>
+        <p>Contact us: <a href="mailto:emeraldcodelines@gmail.com">emeraldcodelines@gmail.com</a> | +234 808 5040 146</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/odufu"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/emerald.codelines/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/emeraldcodelines"><i class="fab fa-facebook"></i></a>
+        </div>
+        <p>&copy; 2024 Emerald Codelines. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
