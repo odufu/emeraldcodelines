@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EC VistaCore | AI-Powered Real Estate Management Solution</title>
     <meta name="description" content="EC VistaCore is an AI-powered real estate management solution that simplifies property listing, client management, and financial tracking. Explore features like installment payments, co-ownership, and virtual walkthroughs.">
-    <meta name="keywords" content="real estate software, property management, AI real estate, EC VistaCore, property listing, real estate app">
+    <meta name="keywords" content="real estate software, property management, AI real estate, EC VistaCore, property listing, real estate app, real estate technology Nigeria">
     <meta name="author" content="Emerald Codelines">
     <meta property="og:title" content="EC VistaCore | AI-Powered Real Estate Management Solution">
     <meta property="og:description" content="Streamline property management with EC VistaCore. Features include AI-powered recommendations, installment payments, co-ownership, and virtual walkthroughs.">
-    <meta property="og:image" content="https://example.com/ec-vistacore-og-image.jpg">
+    <meta property="og:image" content="https://www.emeraldcodelines.org/images/ec-vistacore-og-image.jpg">
     <meta property="og:url" content="https://www.emeraldcodelines.org/ec-vistacore">
+    <link rel="canonical" href="https://www.emeraldcodelines.org/ec-vistacore">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Reset and Base Styles */
@@ -52,9 +53,18 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             color: var(--emerald-green);
             font-size: 1.8rem;
             font-weight: bold;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            border-radius: 50px;
         }
 
         .nav-links {
@@ -304,7 +314,10 @@
 <body>
     <header>
         <nav class="nav-container">
-            <div class="logo">EC VistaCore</div>
+            <div class="logo">
+                <img src="./images/logo.png" alt="Emerald Codelines Logo - Innovative Technology Solutions">
+                EC VistaCore
+            </div>
             <div class="hamburger" onclick="toggleMenu()">
                 <div class="line"></div>
                 <div class="line"></div>
@@ -324,7 +337,7 @@
         <div class="hero-content">
             <h1>Revolutionizing Real Estate Management</h1>
             <p>Streamline operations, automate workflows, and grow your business with EC VistaCore.</p>
-            <button class="cta-button">Get Started</button>
+            <button onclick="redirectToWhatsApp()" class="cta-button">Get Started</button>
         </div>
     </section>
 
@@ -358,13 +371,13 @@
         <h2>App Screenshots</h2>
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="screenshot1.jpg" alt="EC VistaCore Property Listing Screen">
+                <img src="images/screenshot1.jpg" alt="EC VistaCore Property Listing Screen - Real Estate Management">
             </div>
             <div class="gallery-item">
-                <img src="screenshot2.jpg" alt="EC VistaCore Payment Options Screen">
+                <img src="images/screenshot2.jpg" alt="EC VistaCore Payment Options Screen - Flexible Payment Plans">
             </div>
             <div class="gallery-item">
-                <img src="screenshot3.jpg" alt="EC VistaCo re Virtual Walkthrough Screen">
+                <img src="images/screenshot3.jpg" alt="EC VistaCore Virtual Walkthrough Screen - 360° Property View">
             </div>
         </div>
     </section>
@@ -402,6 +415,16 @@
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active');
+        }
+
+        // WhatsApp Redirect
+        function redirectToWhatsApp() {
+            const message = encodeURIComponent(
+                "Hi Emerald Codelines, I am interested in EC VistaCore. Can we discuss how it can benefit my business?"
+            );
+            const phoneNumber = '+2348085040146';
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+            window.location.href = whatsappUrl;
         }
     </script>
 </body>
