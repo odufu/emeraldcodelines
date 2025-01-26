@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /images/
+Allow: /core/
+
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /core/
+
+Sitemap: https://www.emeraldcodelines.org/sitemap.xml

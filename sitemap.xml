@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    <url>
+        <loc>https://www.emeraldcodelines.org/scvistacore.html</loc>
+        <image:image>
+            <image:loc>https://www.emeraldcodelines.org/images/core/1.jpg</image:loc>
+            <image:caption>EC VistaCore Property Listing Screen - Real Estate Management</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.emeraldcodelines.org/images/core/2.jpg</image:loc>
+            <image:caption>EC VistaCore Payment Options Screen - Flexible Payment Plans</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.emeraldcodelines.org/images/core/3.jpg</image:loc>
+            <image:caption>EC VistaCore Virtual Walkthrough Screen - 360° Property View</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.emeraldcodelines.org/ecurbanlense.html</loc>
+        <image:image>
+            <image:loc>https://www.emeraldcodelines.org/images/core/1.jpg</image:loc>
+            <image:caption>EC Urban Lens Property Search Screen</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.emeraldcodelines.org/images/core/2.jpg</image:loc>
+            <image:caption>EC Urban Lens Virtual Walkthrough Screen</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.emeraldcodelines.org/images/core/3.jpg</image:loc>
+            <image:caption>EC Urban Lens Payment Options Screen</image:caption>
+        </image:image>
+    </url>
+</urlset>
