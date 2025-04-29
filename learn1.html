@@ -1,0 +1,297 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Learning Interactive Notes</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-markdown@9.0.1/dist/react-markdown.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/remark-gfm@4.0.0/lib/index.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.23.4/babel.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .markdown-content img { max-width: 100%; }
+    .markdown-content table { border-collapse: collapse; width: 100%; }
+    .markdown-content th, .markdown-content td { border: 1px solid #ddd; padding: 8px; }
+    .markdown-content th { background-color: #f2f2f2; }
+    .markdown-content pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const ReactMarkdown = window.ReactMarkdown.default;
+    const remarkGfm = window.remarkGfm;
+
+    // Sample markdown content
+    const sampleMarkdown = `
+# Module 1: Introduction to Programming
+
+## 1.1 What is Programming?
+
+Programming is the process of writing instructions for a computer to execute.
+
+- **Key Points**:
+  - Involves writing code in languages like Python, JavaScript, etc.
+  - Solves problems by breaking them into logical steps.
+
+## 1.2 Programming Languages
+
+### 1.2.1 Python
+
+Python is a versatile, readable programming language.
+
+\`\`\`python
+def hello_world():
+    print("Hello, World!")
+\`\`\`
+
+### 1.2.2 JavaScript
+
+JavaScript is used for web development.
+
+\`\`\`javascript
+console.log("Hello, World!");
+\`\`\`
+
+## 1.3 Setting Up Your Environment
+
+| Tool | Purpose |
+|------|---------|
+| VS Code | Code Editor |
+| Node.js | JavaScript Runtime |
+
+![Sample Image](https://via.placeholder.com/300)
+
+# Module 2: Advanced Concepts
+
+## 2.1 Data Structures
+
+### 2.1.1 Arrays
+
+Arrays store multiple values in a single variable.
+
+### 2.1.2 Objects
+
+Objects store key-value pairs.
+`;
+
+    // Component to render a checkbox
+    const Checkbox = ({ id, checked, onChange, label }) => (
+      <label className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => onChange(id)}
+          className="h-5 w-5"
+        />
+        <span className={checked ? "text-green-600" : ""}>{label}</span>
+      </label>
+    );
+
+    // Component for hierarchical dropdown menu
+    const DropdownMenu = ({ headings, checkedState, toggleChecked }) => {
+      const renderMenu = (nodes, level = 0) => (
+        <ul className={`ml-${level * 4}`}>
+          {nodes.map((node) => (
+            <li key={node.id} className="my-2">
+              <Checkbox
+                id={node.id}
+                checked={checkedState[node.id] || false}
+                onChange={toggleChecked}
+                label={node.text}
+              />
+              {node.children && node.children.length > 0 && (
+                <div>{renderMenu(node.children, level + 1)}</div>
+              )}
+            </li>
+          ))}
+        </ul>
+      );
+
+      return <div className="p-4 bg-gray-100 rounded">{renderMenu(headings)}</div>;
+    };
+
+    // Main App component
+    const App = () => {
+      const [markdown, setMarkdown] = useState(sampleMarkdown);
+      const [headings, setHeadings] = useState([]);
+      const [checkedState, setCheckedState] = useState({});
+
+      // Parse markdown to extract headings hierarchy
+      useEffect(() => {
+        const lines = markdown.split("\n");
+        const headingStack = [];
+        const headingTree = [];
+        let currentId = 0;
+
+        lines.forEach((line) => {
+          const match = line.match(/^(#{1,6})\s+(.+)/);
+          if (match) {
+            const level = match[1].length;
+            const text = match[2].trim();
+            const id = `heading-${currentId++}`;
+            const node = { id, text, level, children: [] };
+
+            // Find the appropriate parent based on level
+            while (
+              headingStack.length > 0 &&
+              headingStack[headingStack.length - 1].level >= level
+            ) {
+              headingStack.pop();
+            }
+
+            if (headingStack.length === 0) {
+              headingTree.push(node);
+            } else {
+              headingStack[headingStack.length - 1].children.push(node);
+            }
+
+            headingStack.push(node);
+          }
+        });
+
+        setHeadings(headingTree);
+      }, [markdown]);
+
+      // Handle checkbox toggle
+      const toggleChecked = (id) => {
+        setCheckedState((prev) => {
+          const newState = { ...prev };
+
+          // Toggle the clicked checkbox
+          newState[id] = !newState[id];
+
+          // Update parent checkboxes
+          const updateParents = (nodes) => {
+            nodes.forEach((node) => {
+              if (node.children && node.children.length > 0) {
+                updateParents(node.children);
+                const allChildrenChecked = node.children.every(
+                  (child) => newState[child.id]
+                );
+                newState[node.id] = allChildrenChecked;
+              }
+            });
+          };
+
+          updateParents(headings);
+
+          // Prevent unchecking parent if children are checked
+          const preventParentUncheck = (nodes) => {
+            nodes.forEach((node) => {
+              if (node.children && node.children.length > 0) {
+                const anyChildChecked = node.children.some(
+                  (child) => newState[child.id]
+                );
+                if (anyChildChecked) {
+                  newState[node.id] = true;
+                }
+                preventParentUncheck(node.children);
+              }
+            });
+          };
+
+          preventParentUncheck(headings);
+
+          return newState;
+        });
+      };
+
+      return (
+        <div className="flex min-h-screen">
+          {/* Sidebar with hierarchical dropdown */}
+          <div className="w-1/4 bg-gray-50 p-4 overflow-y-auto">
+            <h2 className="text-xl font-bold mb-4">Course Modules</h2>
+            <DropdownMenu
+              headings={headings}
+              checkedState={checkedState}
+              toggleChecked={toggleChecked}
+            />
+          </div>
+
+          {/* Main content area */}
+          <div className="w-3/4 p-8 markdown-content">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ node, ...props }) => (
+                  <h1 className="text-3xl font-bold mt-6 mb-4" {...props} />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2 className="text-2xl font-semibold mt-5 mb-3" {...props} />
+                ),
+                h3: ({ node, ...props }) => (
+                  <h3 className="text-xl font-medium mt-4 mb-2" {...props} />
+                ),
+                code: ({ node, inline, className, children, ...props }) => {
+                  const match = /language-(\w+)/.exec(className || "");
+                  return !inline && match ? (
+                    <pre className="bg-gray-100 p-4 rounded">
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    </pre>
+                  ) : (
+                    <code className="bg-gray-100 px-1 rounded" {...props}>
+                      {children}
+                    </code>
+                  );
+                },
+              }}
+            >
+              {markdown}
+            </ReactMarkdown>
+          </div>
+        </div>
+      );
+    };
+
+    // Render the app
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
